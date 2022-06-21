@@ -13,11 +13,18 @@ use Ares\Framework\Exception\NoSuchEntityException;
 use Ares\Guild\Entity\Guild;
 use Ares\Guild\Repository\GuildMemberRepository;
 use Ares\Guild\Repository\GuildRepository;
+use Ares\Framework\Mapping\Annotation as AR;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class GuildController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="guilds",
+ *     pattern="guilds",
+ * )
  *
  * @package Ares\Guild\Controller
  */
@@ -59,6 +66,12 @@ class GuildController extends BaseController
     }
 
     /**
+     * @AR\Route(
+     *     methods={"GET"},
+     *     placeholders={"page": "[0-9]+","rpp": "[0-9]+"},
+     *     pattern="/list/{page}/{rpp}"
+     * )
+     *
      * @param Request $request
      * @param Response $response
      *

@@ -7,6 +7,7 @@
 
 namespace Ares\User\Controller;
 
+use Ares\Framework\Mapping\Annotation as AR;
 use Ares\Framework\Controller\BaseController;
 use Ares\Framework\Exception\DataObjectManagerException;
 use Ares\User\Repository\UserCurrencyRepository;
@@ -17,6 +18,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class UserHallOfFameController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="hall-of-fame",
+ *     pattern="hall-of-fame",
+ * )
  *
  * @package Ares\User\Controller
  */
@@ -36,91 +43,31 @@ class UserHallOfFameController extends BaseController
     ) {}
 
     /**
-     * @param Request  $request
-     * @param Response $response
+     * @AR\Route(
+     *     methods={"GET"},
+     *     pattern="/top-users"
+     * )
      *
-     * @return Response
-     */
-    public function topCredits(Request $request, Response $response): Response
-    {
-        $users = $this->userRepository->getTopCredits();
-
-        return $this->respond(
-            $response,
-            response()
-                ->setData($users)
-        );
-    }
-
-    /**
-     * @param Request  $request
+     * @param Request $request
      * @param Response $response
      *
      * @return Response
      * @throws DataObjectManagerException
      */
-    public function topDiamonds(Request $request, Response $response): Response
+    public function topUsers(Request $request, Response $response): Response
     {
-        $users = $this->userCurrencyRepository->getTopDiamonds();
+        $topUsers = [
+            //'credits'       => $this->userRepository->getTopCredits(),
+            'diamonds'      => $this->userCurrencyRepository->getTopDiamonds(),
+            'duckets'       => $this->userCurrencyRepository->getTopDuckets(),
+            'achievements'  => $this->userCurrencyRepository->getTopDuckets(),
+            'online'        => $this->userSettingRepository->getTopOnlineTime()
+        ];
 
         return $this->respond(
             $response,
             response()
-                ->setData($users)
-        );
-    }
-
-    /**
-     * @param Request  $request
-     * @param Response $response
-     *
-     * @return Response
-     * @throws DataObjectManagerException
-     */
-    public function topDuckets(Request $request, Response $response): Response
-    {
-        $users = $this->userCurrencyRepository->getTopDuckets();
-
-        return $this->respond(
-            $response,
-            response()
-                ->setData($users)
-        );
-    }
-
-    /**
-     * @param Request  $request
-     * @param Response $response
-     *
-     * @return Response
-     * @throws DataObjectManagerException
-     */
-    public function topAchievement(Request $request, Response $response): Response
-    {
-        $users = $this->userSettingRepository->getTopAchievements();
-
-        return $this->respond(
-            $response,
-            response()
-                ->setData($users)
-        );
-    }
-
-    /**
-     * @param Request  $request
-     * @param Response $response
-     *
-     * @return Response
-     * @throws DataObjectManagerException
-     */
-    public function topOnlineTime(Request $request, Response $response): Response
-    {
-        $users = $this->userSettingRepository->getTopOnlineTime();
-
-        return $this->respond(
-            $response,
-            response()
-                ->setData($users)
+                ->setData($topUsers)
         );
     }
 }

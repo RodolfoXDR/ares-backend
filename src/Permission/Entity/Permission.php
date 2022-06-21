@@ -13,6 +13,7 @@ use Ares\Permission\Entity\Contract\PermissionInterface;
 use Ares\Permission\Repository\PermissionRepository;
 use Ares\User\Repository\UserRepository;
 use Ares\Framework\Model\Query\Collection;
+use Ares\User\Entity\User;
 
 /**
  * Class Permission
@@ -166,9 +167,20 @@ class Permission extends DataObject implements PermissionInterface
             return null;
         }
 
-        $this->setUsers($users);
+        /** @var User $user */
+        foreach ($users as $user) {
+            $user->getBadges();
+        }
 
-        return $users;
+        $filteredUsers = $users->each(function ($user) {
+            $user->badges = $user->badges->filter(function ($badge) {
+                return $badge->slot_id > 0;
+            });
+        });
+
+        $this->setUsers($filteredUsers);
+
+        return $filteredUsers;
 
     }
 

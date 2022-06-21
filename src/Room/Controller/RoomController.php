@@ -10,6 +10,7 @@ namespace Ares\Room\Controller;
 use Ares\Framework\Controller\BaseController;
 use Ares\Framework\Exception\DataObjectManagerException;
 use Ares\Framework\Exception\NoSuchEntityException;
+use Ares\Framework\Mapping\Annotation as AR;
 use Ares\Room\Entity\Room;
 use Ares\Room\Repository\RoomRepository;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -17,6 +18,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class RoomController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="rooms",
+ *     pattern="rooms",
+ * )
  *
  * @package Ares\Room\Controller
  */
@@ -58,6 +65,12 @@ class RoomController extends BaseController
     }
 
     /**
+     * @AR\Route(
+     *     methods={"GET"},
+     *     placeholders={"page": "[0-9]+","rpp": "[0-9]+"},
+     *     pattern="/list/{page}/{rpp}"
+     * )
+     *
      * @param Request $request
      * @param Response $response
      *

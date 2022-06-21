@@ -53,7 +53,7 @@ class UserSettingRepository extends BaseRepository
     public function getTopOnlineTime(): Collection
     {
         $searchCriteria = $this->getDataObjectManager()
-            ->select(['user_id', 'online_time'])
+            ->select(['user_id', 'online_time as amount'])
             ->orderBy('online_time', 'DESC')
             ->addRelation('user')
             ->limit(3);

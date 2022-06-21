@@ -24,6 +24,7 @@ use Ares\User\Service\Auth\DetermineIpService;
 use Ares\User\Service\Auth\LoginService;
 use Ares\User\Service\Auth\RegisterService;
 use Ares\User\Service\Auth\TicketService;
+use Ares\Framework\Mapping\Annotation as AR;
 use Ares\Framework\Config;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -31,6 +32,12 @@ use ReallySimpleJWT\Exception\ValidateException;
 
 /**
  * Class AuthController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="auth",
+ *     pattern="auth",
+ * )
  *
  * @package Ares\User\Controller\Auth
  */
@@ -56,6 +63,10 @@ class AuthController extends BaseController
     ) {}
 
     /**
+     * @AR\Route(
+     *     methods={"POST"},
+     *     pattern="/login"
+     * )
      * Logs the User in and parses a generated Token into response
      *
      * @param Request  $request
@@ -175,6 +186,11 @@ class AuthController extends BaseController
     /**
      * Gets a new Ticket for the current User
      *
+     * @AR\Route(
+     *     methods={"PUT"},
+     *     pattern="/ticket"
+     * )
+     *
      * @param Request  $request
      * @param Response $response
      *
@@ -201,6 +217,11 @@ class AuthController extends BaseController
     }
 
     /**
+     * @AR\Route(
+     *     methods={"POST"},
+     *     pattern="/logout"
+     * )
+     *
      * Returns a response without the Authorization header
      * We could blacklist the token with redis-cache
      *

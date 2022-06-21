@@ -7,6 +7,7 @@
 
 namespace Ares\User\Entity;
 
+use Ares\User\Repository\UserBadgeRepository;
 use Ares\Framework\Exception\DataObjectManagerException;
 use Ares\Framework\Model\DataObject;
 use Ares\Role\Repository\RoleHierarchyRepository;
@@ -40,7 +41,9 @@ class User extends DataObject implements UserInterface
     public const RELATIONS = [
         'roles' => 'getRoles',
         'currencies' => 'getCurrencies',
-        'permissions' => 'getPermissions'
+        'permissions' => 'getPermissions',
+        'badges' => 'getBadges',
+        'user' => 'getUser'
     ];
 
     /**
@@ -348,7 +351,7 @@ class User extends DataObject implements UserInterface
     {
         return $this->setData(UserInterface::COLUMN_ACCOUNT_CREATED, $lastOnline);
     }
-    
+
     /**
      * @return \DateTime
      */
@@ -494,6 +497,53 @@ class User extends DataObject implements UserInterface
         $this->setCurrencies($currencies);
 
         return $currencies;
+    }
+
+
+    /**
+     * @return Collection|null
+     * @throws DataObjectManagerException
+     */
+    public function getBadges(): ?Collection
+    {
+        $badges = $this->getData('badges');
+
+        if ($badges) {
+            return $badges;
+        }
+
+        if (!isset($this)) {
+            return null;
+        }
+
+        /** @var UserRepository $userRepository */
+        $userRepository = repository(UserRepository::class);
+
+        /** @var UserBadgeRepository $userBadgeRepository */
+        $userBadgeRepository = repository(UserBadgeRepository::class);
+
+        $badges = $userRepository->getOneToMany(
+            $userBadgeRepository,
+            $this->getId(),
+            'user_id'
+        );
+
+        if (!$badges->toArray()) {
+            return null;
+        }
+
+        $this->setBadges($badges);
+
+        return $badges;
+    }
+
+    /**
+     * @param Collection $badges
+     * @return User
+     */
+    public function setBadges(Collection $badges): User
+    {
+        return $this->setData('badges', $badges);
     }
 
     /**

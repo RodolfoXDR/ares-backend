@@ -7,6 +7,7 @@
 
 namespace Ares\Vote\Controller;
 
+use Ares\Framework\Mapping\Annotation as AR;
 use Ares\Framework\Controller\BaseController;
 use Ares\Framework\Exception\AuthenticationException;
 use Ares\Framework\Exception\DataObjectManagerException;
@@ -28,6 +29,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class VoteController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="votes",
+ *     pattern="votes"
+ * )
  *
  * @package Ares\Vote\Controller
  */
@@ -54,6 +61,11 @@ class VoteController extends BaseController
 
     /**
      * Create new vote.
+     *
+     *  @AR\Route(
+     *     methods={"POST"},
+     *     pattern="/create"
+     * )
      *
      * @param Request  $request
      * @param Response $response
@@ -109,6 +121,11 @@ class VoteController extends BaseController
 
     /**
      * Returns total count of likes/dislikes for given entity.
+     *
+     *  @AR\Route(
+     *     methods={"GET"},
+     *     pattern="/total"
+     * )
      *
      * @param Request  $request
      * @param Response $response

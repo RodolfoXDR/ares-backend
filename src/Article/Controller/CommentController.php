@@ -21,12 +21,19 @@ use Ares\Framework\Exception\ValidationException;
 use Ares\Framework\Model\Query\PaginatedCollection;
 use Ares\Framework\Service\ValidationService;
 use Ares\User\Entity\User;
+use Ares\Framework\Mapping\Annotation as AR;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class CommentController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="comments",
+ *     pattern="comments",
+ * )
  *
  * @package Ares\Article\Controller
  */
@@ -50,6 +57,11 @@ class CommentController extends BaseController
     ) {}
 
     /**
+     * @AR\Route(
+     *     methods={"POST"},
+     *     pattern="/create"
+     * )
+     *
      * @param Request  $request
      * @param Response $response
      *
@@ -108,6 +120,12 @@ class CommentController extends BaseController
     }
 
     /**
+     * @AR\Route(
+     *     methods={"GET"},
+     *     placeholders={"article_id": "[0-9]+", "page": "[0-9]+", "rpp": "[0-9]+"},
+     *     pattern="/{article_id}/list/{page}/{rpp}"
+     * )
+     *
      * @param Request $request
      * @param Response $response
      * @param array $args

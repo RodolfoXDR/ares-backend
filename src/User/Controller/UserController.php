@@ -22,7 +22,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class UserController
+ *
  * @AR\Router
+ * @AR\Group(
+ *     prefix="user",
+ *     pattern="user",
+ * )
  *
  * @package Ares\User\Controller
  */
@@ -40,6 +45,11 @@ class UserController extends BaseController
     ) {}
 
     /**
+     * @AR\Route(
+     *     methods={"GET"},
+     *     pattern="/"
+     * )
+     *
      * Retrieves the logged in User via JWT - Token
      *
      * @param Request  $request  The current incoming Request
@@ -95,9 +105,8 @@ class UserController extends BaseController
      * Gets all current Online User and counts them
      *
      * @AR\Route(
-     *     name="user/online",
      *     methods={"GET"},
-     *     pattern="/user/online"
+     *     pattern="/online"
      * )
      *
      * @param Request  $request

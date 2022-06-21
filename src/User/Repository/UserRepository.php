@@ -7,6 +7,7 @@
 
 namespace Ares\User\Repository;
 
+use Ares\Framework\Exception\DataObjectManagerException;
 use Ares\Framework\Exception\NoSuchEntityException;
 use Ares\Framework\Model\Query\Collection;
 use Ares\User\Entity\User;
@@ -41,10 +42,12 @@ class UserRepository extends BaseRepository
 
     /**
      * @return Collection
+     * @throws DataObjectManagerException
      */
     public function getTopCredits(): Collection
     {
         $searchCriteria = $this->getDataObjectManager()
+            ->select(['username', 'look', 'credits as amount'])
             ->orderBy('credits', 'DESC')
             ->limit(3);
 

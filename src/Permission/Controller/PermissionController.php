@@ -7,6 +7,7 @@
 
 namespace Ares\Permission\Controller;
 
+use Ares\Framework\Mapping\Annotation as AR;
 use Ares\Framework\Controller\BaseController;
 use Ares\Framework\Exception\DataObjectManagerException;
 use Ares\Permission\Repository\PermissionRepository;
@@ -15,6 +16,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class PermissionController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="permissions",
+ *     pattern="permissions"
+ * )
  *
  * @package Ares\Permission\Controller
  */
@@ -30,6 +37,11 @@ class PermissionController extends BaseController
     ) {}
 
     /**
+     *  @AR\Route(
+     *     methods={"GET"},
+     *     pattern="/list"
+     * )
+     *
      * @param Request     $request
      * @param Response    $response
      *

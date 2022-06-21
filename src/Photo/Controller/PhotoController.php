@@ -12,6 +12,7 @@ use Ares\Framework\Exception\DataObjectManagerException;
 use Ares\Framework\Exception\NoSuchEntityException;
 use Ares\Framework\Exception\ValidationException;
 use Ares\Framework\Interfaces\HttpResponseCodeInterface;
+use Ares\Framework\Mapping\Annotation as AR;
 use Ares\Framework\Service\ValidationService;
 use Ares\Photo\Entity\Photo;
 use Ares\Photo\Exception\PhotoException;
@@ -25,6 +26,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class PhotoController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="photos",
+ *     pattern="photos",
+ * )
  *
  * @package Ares\Photo\Controller
  */
@@ -102,6 +109,12 @@ class PhotoController extends BaseController
     }
 
     /**
+     * @AR\Route(
+     *     methods={"GET"},
+     *     placeholders={"page": "[0-9]+","rpp": "[0-9]+"},
+     *     pattern="/list/{page}/{rpp}"
+     * )
+     *
      * @param Request  $request
      * @param Response $response
      * @param array    $args

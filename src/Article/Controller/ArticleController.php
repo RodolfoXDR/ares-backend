@@ -35,7 +35,6 @@ use Ares\Framework\Middleware\AuthMiddleware;
  * @AR\Group(
  *     prefix="articles",
  *     pattern="articles",
- *     middleware={AuthMiddleware::class}
  * )
  *
  * @package Ares\Article\Controller
@@ -101,8 +100,7 @@ class ArticleController extends BaseController
     /**
      * @AR\Route(
      *     methods={"GET"},
-     *     placeholders={"id": "[0-9]+"},
-     *     pattern="/{id}"
+     *     pattern="/{slug}"
      * )
      *
      * @param Request  $request
@@ -195,6 +193,12 @@ class ArticleController extends BaseController
     }
 
     /**
+     * @AR\Route(
+     *     methods={"GET"},
+     *     placeholders={"page": "[0-9]+", "rpp": "[0-9]+"},
+     *     pattern="/list/{page}/{rpp}"
+     * )
+     *
      * @param Request $request
      * @param Response $response
      *
