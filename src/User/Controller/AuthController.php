@@ -106,6 +106,11 @@ class AuthController extends BaseController
     /**
      * Registers the User and parses a generated Token into the response
      *
+     * @AR\Route(
+     *     methods={"POST"},
+     *     pattern="/register"
+     * )
+     *
      * @param Request $request
      * @param Response $response
      *
@@ -142,6 +147,11 @@ class AuthController extends BaseController
 
     /**
      * Gets the viable Looks for the registration
+     *
+     * @AR\Route(
+     *     methods={"get"},
+     *     pattern="/looks"
+     * )
      *
      * @param Request $request
      * @param Response $response

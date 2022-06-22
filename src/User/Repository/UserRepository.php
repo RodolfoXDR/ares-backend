@@ -95,4 +95,16 @@ class UserRepository extends BaseRepository
             ->where('ip_register', $ipRegister)
             ->count();
     }
+
+    /**
+     * @param string $username
+     *
+     * @return int
+     */
+    public function getUserAvailability(string $username): int
+    {
+        return $this->getDataObjectManager()
+            ->where('username', $username)
+            ->count();
+    }
 }

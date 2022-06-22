@@ -76,6 +76,11 @@ class UserController extends BaseController
     }
 
     /**
+     * @AR\Route(
+     *     methods={"POST"},
+     *     pattern="/look"
+     * )
+     *
      * @param Request  $request
      * @param Response $response
      *
@@ -123,6 +128,34 @@ class UserController extends BaseController
             response()
                 ->setData([
                     'count' => $onlineUser
+                ])
+        );
+    }
+
+    /**
+     * Gets user availability
+     *
+     * @AR\Route(
+     *     methods={"POST"},
+     *     pattern="/availability"
+     * )
+     *
+     * @param Request $request
+     * @param Response $response
+     *
+     * @return Response
+     */
+    public function availability(Request $request, Response $response): Response
+    {
+        $parsedData = $request->getParsedBody();
+
+        $availability = $this->userRepository->getUserAvailability($parsedData['username']);
+
+        return $this->respond(
+            $response,
+            response()
+                ->setData([
+                    'availability' => $availability
                 ])
         );
     }
