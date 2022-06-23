@@ -7,6 +7,7 @@
 
 namespace Ares\Messenger\Controller;
 
+use Ares\Framework\Mapping\Annotation as AR;
 use Ares\Framework\Controller\BaseController;
 use Ares\Framework\Exception\AuthenticationException;
 use Ares\Framework\Exception\DataObjectManagerException;
@@ -18,6 +19,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Class MessengerController
+ *
+ * @AR\Router
+ * @AR\Group(
+ *     prefix="friends",
+ *     pattern="friends"
+ * )
  *
  * @package Ares\Messenger\Controller
  */
@@ -33,6 +40,12 @@ class MessengerController extends BaseController
     ) {}
 
     /**
+     * @AR\Route(
+     *     methods={"GET"},
+     *     placeholders={"page": "[0-9]+", "rpp": "[0-9]+"},
+     *     pattern="/list/{page}/{rpp}"
+     * )
+     *
      * @param Request  $request
      * @param Response $response
      *
