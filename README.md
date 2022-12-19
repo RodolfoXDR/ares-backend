@@ -14,11 +14,9 @@ It can be used for fast creating and expanding Habbo Retros.
 
 ##### 1. Clone project.
 ```console
-$ git clone https://github.com/Domexx/ares-habbo-backend.git
+$ git clone https://github.com/raizdev/ares-vue.git ./
 ```
-##### 2. Change directory to project.
-```console
-$ cd ares-habbo-backend
+
 ```
 ##### 3. Copy dotenv config.
 ```console
